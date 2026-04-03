@@ -1,5 +1,6 @@
 "use client";
-
+import Image from "next/image";
+import { useState } from "react";
 /* ─────────────────────────────────────────
    FEATHER SVG ICONS (inline, zero deps)
 ───────────────────────────────────────── */
@@ -21,6 +22,12 @@ const IconPlay = ({ stroke = "currentColor", sw = 2.5 }) => (
     stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
     <circle cx="12" cy="12" r="10" />
     <polygon points="10 8 16 12 10 16 10 8" />
+  </svg>
+);
+const IconChevronDown = ({ size = 14, stroke = "currentColor", sw = 2.5 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9" />
   </svg>
 );
 const IconTrendingUp = () => (
@@ -45,6 +52,33 @@ const IconMonitor = () => (
     <line x1="12" y1="17" x2="12" y2="21" />
   </svg>
 );
+const TECH = [
+  {
+    src: "https://cdn.simpleicons.org/nextdotjs/000000",
+    name: "Next.js",
+    glow: "hover:bg-black/5",
+    gradient: "from-black to-gray-800"
+  },
+  {
+    src: "https://cdn.simpleicons.org/react/61DAFB",
+    name: "React",
+    glow: "hover:bg-cyan-400/10",
+    gradient: "from-cyan-400 to-blue-500"
+  },
+  {
+    src: "https://cdn.simpleicons.org/javascript/F7DF1E",
+    name: "JavaScript",
+    glow: "hover:bg-yellow-400/20",
+    gradient: "from-yellow-400 to-orange-500"
+  },
+  {
+    src: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+    name: "Tailwind",
+    glow: "hover:bg-cyan-500/10",
+    gradient: "from-cyan-500 to-teal-500"
+  },
+  
+];
 const IconLayers = () => (
   <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
     stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
@@ -75,57 +109,158 @@ const IconFile = () => (
   </svg>
 );
 
-/* ─────────────────────────────────────────
-   NAV
-───────────────────────────────────────── */
+// /* ─────────────────────────────────────────
+//    NAV
+
 function Navbar() {
+  const [showMore, setShowMore] = useState(false);
+
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200"
-      style={{ animation: "fadeDown .5s ease both" }}>
-      <div className="max-w-[1160px] mx-auto flex items-center justify-between px-8 py-4">
+    <nav
+      className="sticky top-0 z-50 relative
+        bg-white/70 backdrop-blur-xl border-b border-slate-200/60"
+      style={{
+        animation: "fadeDown .5s ease both",
+        boxShadow: "0 6px 30px rgba(0,0,0,0.08)",
+      }}
+    >
+      {/* Top gradient line */}
+      <div className="absolute top-0 left-0 w-full h-[2px]
+        bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent" />
 
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-2.5 no-underline">
-          <div className="w-8 h-8 rounded-[9px] bg-[#1d4ed8] flex items-center justify-center
-            shadow-[0_2px_12px_rgba(29,78,216,0.35)]">
-            <IconZap />
+      {/* Glow Right */}
+      <div className="absolute -top-24 -right-40 w-[420px] h-[420px]
+        bg-gradient-to-br from-blue-400/20 via-cyan-300/20 to-purple-400/20
+        blur-[140px] rounded-full pointer-events-none" />
+
+      {/* Glow Left */}
+      <div className="absolute -top-24 -left-40 w-[360px] h-[360px]
+        bg-gradient-to-br from-purple-400/20 via-pink-300/20 to-transparent
+        blur-[140px] rounded-full pointer-events-none" />
+
+      {/* MAIN CONTAINER */}
+      <div className="max-w-[1200px] mx-auto px-8 md:px-12 py-5 relative">
+
+        <div className="flex items-center justify-between w-full">
+
+          {/* LEFT LOGO */}
+          <a href="/" className="flex items-center gap-3 group">
+            <div className="relative w-10 h-10">
+              <Image
+                src="/logo.png"
+                alt="DigitalSloth Logo"
+                fill
+                className="object-contain group-hover:scale-110 transition-transform duration-300"
+              />
+            </div>
+
+            <span
+              style={{
+                fontFamily: "'Poppins', sans-serif",
+                fontSize: "clamp(1.4rem, 2.5vw, 1.8rem)",
+                fontWeight: 700,
+                letterSpacing: "-0.04em",
+                background:
+                  "linear-gradient(135deg, #1e293b 0%, #334155 50%, #1d4ed8 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              Digital
+              <span
+                style={{
+                  background:
+                    "linear-gradient(135deg, #1d4ed8 0%, #3b82f6 50%, #60a5fa 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                }}
+              >
+                Sloth
+              </span>
+            </span>
+          </a>
+
+          {/* 🔥 RIGHT SIDE (NAV + ACTIONS TOGETHER) */}
+          <div className="hidden md:flex items-center gap-10">
+
+            {/* NAV LINKS */}
+            <ul className="flex items-center gap-10 lg:gap-14">
+              {["Product", "Features", "Pricing"].map((item) => (
+                <li key={item}>
+                  <a
+                    href="#"
+                    className="group relative px-1 py-2 text-slate-600 text-[0.95rem] font-medium
+                      hover:text-[#1d4ed8] transition-colors"
+                  >
+                    {item}
+                    <span className="absolute left-0 -bottom-2 w-0 h-[2px]
+                      bg-[#1d4ed8] transition-all duration-300 group-hover:w-full" />
+                  </a>
+                </li>
+              ))}
+
+              {/* MORE */}
+              <li className="relative">
+                <button
+                  onClick={() => setShowMore(!showMore)}
+                  className="group flex items-center gap-1 px-1 py-2 text-slate-600 text-[0.95rem]
+                    font-medium hover:text-[#1d4ed8] transition-colors"
+                >
+                  More
+                  <span className="absolute left-0 -bottom-2 w-0 h-[2px]
+                    bg-[#1d4ed8] transition-all duration-300 group-hover:w-full" />
+                </button>
+
+                {showMore && (
+                  <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-48
+                    bg-white/80 backdrop-blur-xl border border-slate-200
+                    rounded-xl shadow-xl py-2 z-50">
+                    {["Blog", "Docs", "Support"].map((item) => (
+                      <a
+                        key={item}
+                        href="#"
+                        className="block px-4 py-2.5 text-sm text-slate-600
+                          hover:bg-slate-50 hover:text-[#1d4ed8] transition-colors"
+                      >
+                        {item}
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </li>
+            </ul>
+
+            {/* 🔥 ACTIONS (NOW PART OF SAME FLOW) */}
+            <div className="flex items-center gap-4 ml-4 pl-4 border-l border-slate-200/60">
+              <button className="text-slate-500 text-[0.9rem]
+                font-medium px-4 py-2 rounded-lg
+                hover:text-[#1d4ed8] hover:bg-blue-50 transition-all">
+                Sign in
+              </button>
+
+              <button className="flex items-center gap-2
+                bg-gradient-to-r from-blue-600 to-blue-500 text-white
+                px-5 py-2.5 rounded-lg text-[0.9rem] font-semibold
+                shadow-md hover:shadow-lg hover:-translate-y-[1px]
+                transition-all">
+                Get Started →
+              </button>
+            </div>
+
           </div>
-          <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(1rem, 2.5vw, 1.35rem)", letterSpacing: "-0.02em" }}
-            className="text-slate-900">
-            Digital<span className="text-[#1d4ed8]">Sloth</span>
-          </span>
-        </a>
 
-        <ul className="flex gap-7 list-none m-0 p-0">
-          {["Product", "Features", "Pricing", "Blog", "Docs"].map((item) => (
-            <li key={item}>
-              <a href="#" className="text-slate-500 text-sm font-medium no-underline
-                hover:text-[#1d4ed8] transition-colors">{item}</a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <button className="text-slate-500 text-sm font-medium bg-transparent border-none
-            cursor-pointer px-4 py-2 rounded-lg hover:text-[#1d4ed8] hover:bg-blue-50
-            transition-all font-[inherit]">
-            Sign in
-          </button>
-          <button className="flex items-center gap-1.5 bg-[#1d4ed8] text-white border-none
-            cursor-pointer px-5 py-[9px] rounded-[9px] text-sm font-semibold font-[inherit]
-            shadow-[0_1px_3px_rgba(29,78,216,0.25),0_4px_12px_rgba(29,78,216,0.2)]
-            hover:bg-[#2563eb] hover:-translate-y-px
-            hover:shadow-[0_1px_3px_rgba(29,78,216,0.3),0_6px_20px_rgba(29,78,216,0.3)]
-            transition-all">
-            Get Started
-            <IconArrowRight />
+          {/* Mobile menu */}
+          <button className="md:hidden text-xl text-slate-600">
+            ☰
           </button>
         </div>
+
       </div>
     </nav>
+          // }
   );
 }
+
 
 /* ─────────────────────────────────────────
    DASHBOARD CARD
@@ -255,35 +390,18 @@ const TRUST = [
 export default function Home() {
   return (
     <>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
-
-        @keyframes fadeDown   { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes fadeUp     { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
-        @keyframes barGrow    { from{transform:scaleY(0)} to{transform:scaleY(1)} }
-        @keyframes fillIn     { from{width:0} }
-        @keyframes cardFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
-        @keyframes fbFloat    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
-        @keyframes blink      { 0%,100%{opacity:1} 50%{opacity:.2} }
-        @keyframes decoSpin   { from{transform:rotate(0)} to{transform:rotate(360deg)} }
-        @keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:1}60%{transform:translateY(9px);opacity:0}}
-
-        body {
-          // background: #fff;
-          background: linear-gradient(to bottom, #ffffff, #f8fbff);
-          font-family: 'Poppins', sans-serif;
-          font-size: clamp(0.95rem, 1.35vw, 1.05rem);
-          line-height: 1.5;
-          -webkit-font-smoothing: antialiased;
-        }
-      `}</style>
 
       <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
         <Navbar />
 
         {/* ══ HERO ══ */}
-        <section className="relative min-h-[calc(100vh-65px)] flex flex-col
-          items-center justify-center pt-20 pb-16 px-8 overflow-hidden">
+        <section  className="relative min-h-[calc(100vh-65px)] flex flex-col items-center justify-center pt-20 pb-16 px-8 overflow-hidden"
+  style={{
+    backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' version='1.1' xmlns:xlink='http://www.w3.org/1999/xlink' xmlns:svgjs='http://svgjs.dev/svgjs' width='1440' height='560' preserveAspectRatio='none' viewBox='0 0 1440 560'%3e%3cg mask='url(%26quot%3b%23SvgjsMask1076%26quot%3b)' fill='none'%3e%3cpath d='M 0%2c148 C 96%2c125.2 288%2c29.6 480%2c34 C 672%2c38.4 768%2c162.8 960%2c170 C 1152%2c177.2 1344%2c90 1440%2c70L1440 560L0 560z' fill='%23184a7e'%3e%3c/path%3e%3cpath d='M 0%2c494 C 48%2c465.4 144%2c363.6 240%2c351 C 336%2c338.4 384%2c430.6 480%2c431 C 576%2c431.4 624%2c334.6 720%2c353 C 816%2c371.4 864%2c511 960%2c523 C 1056%2c535 1104%2c411 1200%2c413 C 1296%2c415 1392%2c509 1440%2c533L1440 560L0 560z' fill='%232264ab'%3e%3c/path%3e%3c/g%3e%3cdefs%3e%3cmask id='SvgjsMask1076'%3e%3crect width='1440' height='560' fill='white'%3e%3c/rect%3e%3c/mask%3e%3c/defs%3e%3c/svg%3e")`,
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+    backgroundPosition: "bottom",
+  }}>
 
           {/* Aura top-right */}
           <div className="absolute -top-52 -right-52 w-[700px] h-[700px] rounded-full pointer-events-none z-0"
@@ -324,38 +442,39 @@ export default function Home() {
             {/* LEFT */}
             <div>
               {/* Pill */}
-              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200
-                text-[#1d4ed8] text-[.75rem] font-semibold tracking-[.07em] uppercase
+              <div className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-sm border border-white/30
+                text-white text-[.75rem] font-semibold tracking-[.07em] uppercase
                 px-3.5 py-1.5 rounded-full mb-5"
                 style={{ animation: "fadeUp .6s .1s ease both" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"
+                <span className="w-1.5 h-1.5 rounded-full bg-white"
                   style={{ animation: "blink 1.6s infinite" }} />
                 Trusted by 50,000+ teams
               </div>
 
               {/* H1 */}
-              <h1 className="leading-[1.08] tracking-[-0.03em] text-slate-900 mb-5"
-                style={{
+<h1 className="leading-[1.08] tracking-[-0.03em] bg-gradient-to-r from-[#1E3A8A] via-[#3B82F6] to-[#60A5FA] bg-clip-text text-transparent md:text-white mb-5"
+           style={{
                   fontFamily: "'Poppins', sans-serif",
                   fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
                   fontWeight: 700,
                   animation: "fadeUp .6s .2s ease both",
                 }}>
                 One platform.<br />
-                <em className="not-italic italic"
-                  style={{
-                    background: "linear-gradient(135deg, #1d4ed8 0%, #60a5fa 100%)",
-                    WebkitBackgroundClip: "text",
-                    WebkitTextFillColor: "transparent",
-                    backgroundClip: "text",
-                  }}>
-                  Every
-                </em>{" "}
+               <em
+  className="not-italic"
+  style={{
+    background: "linear-gradient(90deg, #06b6d4, #8b5cf6)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent"
+  }}
+>
+  Every
+</em>{" "}
                 workflow<br />unified.
               </h1>
 
               {/* Sub */}
-              <p className="text-slate-500 text-[1.05rem] leading-[1.7] max-w-[430px]
+              <p className="text-white/85 text-[1.05rem] leading-[1.7] max-w-[430px]
                 font-light mb-9"
                 style={{ animation: "fadeUp .6s .3s ease both" }}>
                 DigitalSloth brings your analytics, automation, and team
@@ -388,20 +507,60 @@ export default function Home() {
               {/* Social proof */}
               <div className="flex items-center gap-4 mt-11"
                 style={{ animation: "fadeUp .6s .5s ease both" }}>
-                <div className="flex">
-                  {["AK", "MS", "JR", "TL", "+"].map((av, i) => (
-                    <div key={i}
-                      className="w-8 h-8 rounded-full border-2 border-white
-                        bg-gradient-to-br from-[#93c5fd] to-[#1d4ed8]
-                        flex items-center justify-center -ml-2 first:ml-0
-                        text-[.65rem] text-white font-bold">
-                      {av}
-                    </div>
-                  ))}
-                </div>
-                <div className="text-[.82rem] text-slate-500 leading-snug">
-                  <div className="text-amber-400 text-[.8rem] tracking-[.05em]">★★★★★</div>
-                  Loved by <strong className="text-slate-900">50,000+</strong> developers & teams
+    <div className="flex">
+  {TECH.map((tech, i) => (
+    <div
+      key={i}
+      className={`relative w-10 h-10 rounded-full border-2 border-white/30
+        bg-gradient-to-br ${tech.gradient} backdrop-blur-sm
+        flex items-center justify-center -ml-3 first:ml-0
+        shadow-[0_4px_12px_rgba(0,0,0,0.2)]
+        hover:scale-125 hover:-translate-y-2 hover:rotate-12
+        hover:shadow-[0_12px_32px_rgba(0,0,0,0.4)]
+        transition-all duration-700 ease-out cursor-pointer
+        before:absolute before:inset-0 before:rounded-full
+        before:bg-gradient-to-br before:from-white/30 before:to-transparent
+        before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-500
+        after:absolute after:inset-[-2px] after:rounded-full after:border-2
+        after:border-white/20 after:opacity-0 hover:after:opacity-100
+        after:animate-pulse after:transition-opacity after:duration-300`}
+      style={{
+        animation: `fadeUp 0.6s ease-out ${0.1 + i * 0.1}s both, float 6s ease-in-out ${i * 0.5}s infinite`,
+        transform: `rotate(${i * 8}deg)`,
+        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))'
+      }}
+    >
+      <img
+        src={tech.src}
+        alt={tech.name}
+        className="w-5 h-5 object-contain relative z-10 filter brightness-0 invert
+          transition-transform duration-300 hover:scale-110"
+      />
+
+      {/* Inner glow ring */}
+      <div className={`absolute inset-1 rounded-full opacity-0
+        bg-gradient-to-br ${tech.gradient} blur-sm
+        animate-pulse transition-opacity duration-1000`} />
+
+      {/* Outer glow effect */}
+      <div className={`absolute inset-0 rounded-full opacity-0
+        bg-gradient-to-br ${tech.gradient} blur-lg scale-150
+        group-hover:opacity-40 transition-all duration-700`} />
+
+      {/* Sparkle effect */}
+      <div className="absolute top-0 right-0 w-2 h-2 bg-white rounded-full opacity-0
+        animate-ping group-hover:opacity-100 transition-opacity duration-300" />
+    </div>
+  ))}
+</div>
+                <div className="text-[.82rem] text-white/90 leading-snug ml-2">
+                  <div className="text-yellow-300 text-[.85rem] tracking-[.08em] font-semibold
+                    drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
+                    ★★★★★
+                  </div>
+                  <div className="text-white font-medium drop-shadow-[0_1px_2px_rgba(0,0,0,0.5)]">
+                    Loved by <strong className="text-white font-bold">50,000+</strong> developers & teams
+                  </div>
                 </div>
               </div>
             </div>
