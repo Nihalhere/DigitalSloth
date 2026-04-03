@@ -1,382 +1,408 @@
 "use client";
-import { useEffect, useRef } from "react";
 
-/* ─────────────────────────────────────────────
-   SVG ICONS  (inline, zero deps)
-───────────────────────────────────────────── */
-const LogoIcon = () => (
-  <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-    <rect width="32" height="32" rx="8" fill="#1d4ed8" />
-    <path d="M8 16C8 11.582 11.582 8 16 8C20.418 8 24 11.582 24 16"
-      stroke="#00d4ff" strokeWidth="2.5" strokeLinecap="round" />
-    <circle cx="16" cy="19" r="4" fill="#00d4ff" opacity="0.9" />
-    <path d="M12 22.5C12 22.5 13 25 16 25C19 25 20 22.5 20 22.5"
-      stroke="#3b82f6" strokeWidth="2" strokeLinecap="round" />
-    <circle cx="12.5" cy="15" r="1.5" fill="#fff" opacity="0.6" />
-    <circle cx="19.5" cy="15" r="1.5" fill="#fff" opacity="0.6" />
+/* ─────────────────────────────────────────
+   FEATHER SVG ICONS (inline, zero deps)
+───────────────────────────────────────── */
+const IconZap = ({ size = 17, stroke = "#fff", sw = 2.5 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+  </svg>
+);
+const IconArrowRight = ({ size = 15, stroke = "#fff", sw = 2.5 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
+    stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    <line x1="5" y1="12" x2="19" y2="12" />
+    <polyline points="12 5 19 12 12 19" />
+  </svg>
+);
+const IconPlay = ({ stroke = "currentColor", sw = 2.5 }) => (
+  <svg width={15} height={15} viewBox="0 0 24 24" fill="none"
+    stroke={stroke} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="10 8 16 12 10 16 10 8" />
+  </svg>
+);
+const IconTrendingUp = () => (
+  <svg width={14} height={14} viewBox="0 0 24 24" fill="none"
+    stroke="#16a34a" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+    <polyline points="17 6 23 6 23 12" />
+  </svg>
+);
+const IconCheckCircle = () => (
+  <svg width={14} height={14} viewBox="0 0 24 24" fill="none"
+    stroke="#1d4ed8" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+    <polyline points="22 4 12 14.01 9 11.01" />
+  </svg>
+);
+const IconMonitor = () => (
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
+    stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="3" width="20" height="14" rx="2" />
+    <line x1="8" y1="21" x2="16" y2="21" />
+    <line x1="12" y1="17" x2="12" y2="21" />
+  </svg>
+);
+const IconLayers = () => (
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
+    stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2L2 7l10 5 10-5-10-5z" />
+    <path d="M2 17l10 5 10-5" />
+    <path d="M2 12l10 5 10-5" />
+  </svg>
+);
+const IconGlobe = () => (
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
+    stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="10" />
+    <line x1="2" y1="12" x2="22" y2="12" />
+    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </svg>
+);
+const IconStar = () => (
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
+    stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+  </svg>
+);
+const IconFile = () => (
+  <svg width={18} height={18} viewBox="0 0 24 24" fill="none"
+    stroke="#94a3b8" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+    <polyline points="13 2 13 9 20 9" />
   </svg>
 );
 
-const HexRingsSVG = () => (
-  <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"
-    className="absolute top-[8%] left-[4%] w-28 opacity-20 animate-[spin_30s_linear_infinite] z-0">
-    <polygon points="60,5 115,32.5 115,87.5 60,115 5,87.5 5,32.5"
-      stroke="#3b82f6" strokeWidth="2" fill="none" />
-    <polygon points="60,20 100,42.5 100,77.5 60,100 20,77.5 20,42.5"
-      stroke="#00d4ff" strokeWidth="1.5" fill="none" />
-    <polygon points="60,38 85,52 85,68 60,82 35,68 35,52"
-      stroke="#7c3aed" strokeWidth="1" fill="none" />
-  </svg>
-);
-
-const CircleRingsSVG = () => (
-  <svg viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"
-    className="absolute bottom-[10%] right-[6%] w-20 opacity-20 animate-[spin_25s_linear_infinite_reverse] z-0">
-    <circle cx="45" cy="45" r="40" stroke="#3b82f6" strokeWidth="2" strokeDasharray="6 4" />
-    <circle cx="45" cy="45" r="28" stroke="#00d4ff" strokeWidth="1.5" strokeDasharray="4 6" />
-    <circle cx="45" cy="45" r="14" stroke="#7c3aed" strokeWidth="1" />
-    <circle cx="45" cy="45" r="4" fill="#3b82f6" />
-  </svg>
-);
-
-const WaveSVG = () => (
-  <svg viewBox="0 0 200 80" fill="none" xmlns="http://www.w3.org/2000/svg"
-    className="absolute top-[30%] left-0 w-48 opacity-10 z-0">
-    <path d="M0 40 Q50 10 100 40 Q150 70 200 40" stroke="#3b82f6" strokeWidth="1.5" fill="none" />
-    <path d="M0 50 Q50 20 100 50 Q150 80 200 50" stroke="#00d4ff" strokeWidth="1" fill="none" opacity="0.5" />
-  </svg>
-);
-
-const PlayIcon = () => (
-  <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-    className="inline mr-2 -mb-0.5">
-    <circle cx="8" cy="8" r="7" stroke="#93c5fd" strokeWidth="1.5" />
-    <path d="M6 5.5L11 8L6 10.5V5.5Z" fill="#93c5fd" />
-  </svg>
-);
-
-/* ─────────────────────────────────────────────
+/* ─────────────────────────────────────────
    NAV
-───────────────────────────────────────────── */
+───────────────────────────────────────── */
 function Navbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between
-      px-12 py-[18px] bg-[rgba(3,9,26,0.6)] backdrop-blur-xl
-      border-b border-[rgba(59,130,246,0.12)]
-      animate-[fadeDown_0.6s_ease_both]">
+    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-slate-200"
+      style={{ animation: "fadeDown .5s ease both" }}>
+      <div className="max-w-[1160px] mx-auto flex items-center justify-between px-8 py-4">
 
-      <a href="/" className="flex items-center gap-2.5 font-black text-[1.35rem] tracking-[-0.04em]
-        font-[Syne,sans-serif] text-white no-underline">
-        <LogoIcon />
-        Digital<span className="text-[#00d4ff]">Sloth</span>
-      </a>
+        {/* Logo */}
+        <a href="/" className="flex items-center gap-2.5 no-underline">
+          <div className="w-8 h-8 rounded-[9px] bg-[#1d4ed8] flex items-center justify-center
+            shadow-[0_2px_12px_rgba(29,78,216,0.35)]">
+            <IconZap />
+          </div>
+          <span style={{ fontFamily: "'Poppins', sans-serif", fontSize: "clamp(1rem, 2.5vw, 1.35rem)", letterSpacing: "-0.02em" }}
+            className="text-slate-900">
+            Digital<span className="text-[#1d4ed8]">Sloth</span>
+          </span>
+        </a>
 
-      <ul className="flex gap-8 list-none m-0">
-        {["Product", "Features", "Pricing", "Blog", "Docs"].map((item) => (
-          <li key={item}>
-            <a href="#"
-              className="text-[#93c5fd] text-[0.88rem] font-medium no-underline
-              hover:text-[#00d4ff] transition-colors">
-              {item}
-            </a>
-          </li>
-        ))}
-      </ul>
+        <ul className="flex gap-7 list-none m-0 p-0">
+          {["Product", "Features", "Pricing", "Blog", "Docs"].map((item) => (
+            <li key={item}>
+              <a href="#" className="text-slate-500 text-sm font-medium no-underline
+                hover:text-[#1d4ed8] transition-colors">{item}</a>
+            </li>
+          ))}
+        </ul>
 
-      <button className="bg-gradient-to-br from-[#1d4ed8] to-[#2563eb]
-        text-white px-6 py-2.5 rounded-full text-[0.86rem] font-semibold
-        border-none cursor-pointer shadow-[0_0_20px_rgba(37,99,235,0.4)]
-        hover:shadow-[0_0_36px_rgba(37,99,235,0.7)] hover:-translate-y-px
-        transition-all">
-        Get Started →
-      </button>
+        {/* Actions */}
+        <div className="flex items-center gap-3">
+          <button className="text-slate-500 text-sm font-medium bg-transparent border-none
+            cursor-pointer px-4 py-2 rounded-lg hover:text-[#1d4ed8] hover:bg-blue-50
+            transition-all font-[inherit]">
+            Sign in
+          </button>
+          <button className="flex items-center gap-1.5 bg-[#1d4ed8] text-white border-none
+            cursor-pointer px-5 py-[9px] rounded-[9px] text-sm font-semibold font-[inherit]
+            shadow-[0_1px_3px_rgba(29,78,216,0.25),0_4px_12px_rgba(29,78,216,0.2)]
+            hover:bg-[#2563eb] hover:-translate-y-px
+            hover:shadow-[0_1px_3px_rgba(29,78,216,0.3),0_6px_20px_rgba(29,78,216,0.3)]
+            transition-all">
+            Get Started
+            <IconArrowRight />
+          </button>
+        </div>
+      </div>
     </nav>
   );
 }
 
-/* ─────────────────────────────────────────────
-   DASHBOARD CARD  (right side)
-───────────────────────────────────────────── */
-const BARS = [45, 72, 58, 88, 64, 78, 50]; // heights in %
+/* ─────────────────────────────────────────
+   DASHBOARD CARD
+───────────────────────────────────────── */
+const BARS = [
+  { h: 40, hi: false }, { h: 62, hi: false }, { h: 48, hi: false },
+  { h: 85, hi: true  }, { h: 55, hi: false }, { h: 70, hi: false },
+  { h: 46, hi: false },
+];
+const METRICS = [
+  { num: "$84.2K", tag: "↑18%",  up: true,  label: "Revenue"      },
+  { num: "12.4K",  tag: "↑9%",   up: true,  label: "Active Users" },
+  { num: "98.2%",  tag: "↑2%",   up: true,  label: "Uptime"       },
+  { num: "3.2s",   tag: "↓0.4s", up: false, label: "Avg Response" },
+];
 
 function DashboardCard() {
   return (
-    <div className="relative flex justify-center items-center
-      animate-[fadeUp_0.7s_0.35s_ease_both]">
+    <div className="relative" style={{ animation: "fadeUp .6s .25s ease both" }}>
 
-      {/* Floating badges */}
-      <div className="float-badge absolute -top-4 -right-3 flex items-center gap-2
-        bg-[rgba(11,28,73,0.85)] border border-[rgba(59,130,246,0.25)]
-        rounded-xl px-3.5 py-2 backdrop-blur-xl text-xs font-medium
-        shadow-[0_8px_32px_rgba(0,0,0,0.3)] whitespace-nowrap
-        animate-[fbFloat_5s_ease-in-out_infinite]">
-        <span className="w-2 h-2 rounded-full bg-[#22c55e] animate-ping inline-block" />
-        Revenue +24.6% this week
+      {/* Float badge 1 */}
+      <div className="absolute -top-[18px] -right-4 z-10 flex items-center gap-2
+        bg-white border border-slate-200 rounded-xl px-3.5 py-2
+        shadow-[0_8px_32px_rgba(15,23,42,0.1)]
+        text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
+        style={{ animation: "fbFloat 5s ease-in-out infinite" }}>
+        <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center shrink-0">
+          <IconTrendingUp />
+        </div>
+        Revenue up <strong className="ml-0.5">+24.6%</strong> this week
       </div>
 
-      <div className="float-badge absolute bottom-5 -left-5 flex items-center gap-2
-        bg-[rgba(11,28,73,0.85)] border border-[rgba(59,130,246,0.25)]
-        rounded-xl px-3.5 py-2 backdrop-blur-xl text-xs font-medium
-        shadow-[0_8px_32px_rgba(0,0,0,0.3)] whitespace-nowrap
-        animate-[fbFloat_5s_-2.5s_ease-in-out_infinite]">
-        <span className="w-2 h-2 rounded-full bg-[#3b82f6] animate-ping inline-block" />
-        3 tasks completed
+      {/* Float badge 2 */}
+      <div className="absolute bottom-4 -left-5 z-10 flex items-center gap-2
+        bg-white border border-slate-200 rounded-xl px-3.5 py-2
+        shadow-[0_8px_32px_rgba(15,23,42,0.1)]
+        text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
+        style={{ animation: "fbFloat 5s -2.5s ease-in-out infinite" }}>
+        <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+          <IconCheckCircle />
+        </div>
+        3 automations completed
       </div>
 
       {/* Main card */}
-      <div className="relative w-full max-w-[420px]
-        bg-[rgba(11,28,73,0.6)] border border-[rgba(59,130,246,0.2)]
-        rounded-3xl p-7 backdrop-blur-2xl
-        shadow-[0_32px_80px_rgba(0,0,0,0.5),inset_0_0_0_1px_rgba(255,255,255,0.04)]
-        animate-[cardFloat_6s_ease-in-out_infinite]
-        before:content-[''] before:absolute before:inset-[-1px] before:rounded-3xl
-        before:bg-gradient-to-br before:from-[rgba(37,99,235,0.4)] before:via-transparent
-        before:to-[rgba(0,212,255,0.2)] before:-z-10">
+      <div className="bg-white border border-slate-200 rounded-[20px] p-7 relative
+        shadow-[0_4px_6px_rgba(15,23,42,0.04),0_20px_60px_rgba(15,23,42,0.08)]"
+        style={{ animation: "cardFloat 7s ease-in-out infinite" }}>
+
+        {/* Top accent line */}
+        <div className="absolute top-0 left-6 right-6 h-[2px] rounded-b-sm
+          bg-gradient-to-r from-[#1d4ed8] via-[#60a5fa] to-transparent" />
 
         {/* Card header */}
         <div className="flex items-center justify-between mb-5">
-          <span className="font-bold text-[0.95rem] font-[Syne,sans-serif]">Analytics Overview</span>
-          <div className="flex gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-[#ef4444]" />
-            <span className="w-2 h-2 rounded-full bg-[#f59e0b]" />
-            <span className="w-2 h-2 rounded-full bg-[#22c55e]" />
+          <span className="text-[.85rem] font-bold text-slate-900">Analytics Overview</span>
+          <div className="flex items-center gap-1.5 bg-blue-50 text-[#1d4ed8]
+            text-[.7rem] font-semibold px-2.5 py-1 rounded-full">
+            <span className="w-[5px] h-[5px] rounded-full bg-green-500"
+              style={{ animation: "blink 1.2s infinite" }} />
+            Live
           </div>
         </div>
 
         {/* Bar chart */}
-        <div className="flex items-end gap-2 h-[90px] mb-5">
-          {BARS.map((h, i) => (
+        <div className="flex items-end gap-1.5 h-20 mb-[18px] px-0.5">
+          {BARS.map(({ h, hi }, i) => (
             <div key={i}
-              className={`flex-1 rounded-t-md relative overflow-hidden origin-bottom
-                ${i === 3
-                  ? "bg-gradient-to-b from-[#00d4ff] to-[#2563eb]"
-                  : "bg-gradient-to-b from-[#2563eb] to-[#1d4ed8]"}
-                after:content-[''] after:absolute after:inset-0
-                after:bg-gradient-to-b after:from-[rgba(0,212,255,0.3)] after:to-transparent`}
+              className={`flex-1 rounded-t-[4px] origin-bottom cursor-pointer
+                transition-colors duration-200
+                ${hi
+                  ? "bg-gradient-to-b from-[#1d4ed8] to-[#3b82f6]"
+                  : "bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] hover:from-[#1d4ed8] hover:to-[#3b82f6]"
+                }`}
               style={{
                 height: `${h}%`,
-                animation: `barGrow 1.2s cubic-bezier(.34,1.56,.64,1) ${0.1 + i * 0.05}s both`,
+                animation: `barGrow 1s cubic-bezier(.34,1.56,.64,1) ${0.05 + i * 0.05}s both`,
               }}
             />
           ))}
         </div>
 
-        {/* Metrics grid */}
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          {[
-            { val: "$84.2K", badge: "↑ 18%", positive: true, label: "Revenue" },
-            { val: "12.4K",  badge: "↑ 9%",  positive: true, label: "Active Users" },
-            { val: "98.2%",  badge: "↑ 2%",  positive: true, label: "Uptime" },
-            { val: "3.2s",   badge: "↓ 0.4s", positive: false, label: "Avg Response" },
-          ].map(({ val, badge, positive, label }) => (
+        {/* Metric grid */}
+        <div className="grid grid-cols-2 gap-2.5 mb-3.5">
+          {METRICS.map(({ num, tag, up, label }) => (
             <div key={label}
-              className="bg-[rgba(37,99,235,0.12)] border border-[rgba(59,130,246,0.18)]
-              rounded-xl px-3.5 py-3">
-              <div className="text-[1.25rem] font-bold font-[Syne,sans-serif]">
-                {val}{" "}
-                <span className={`text-[0.73rem] font-[DM_Sans] ${positive ? "text-[#22c55e]" : "text-[#f87171]"}`}>
-                  {badge}
+              className="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3">
+              <div className="text-[1.2rem] font-bold text-slate-900 leading-none">
+                {num}
+                <span className={`text-[.7rem] font-semibold ml-1 ${up ? "text-green-600" : "text-red-500"}`}>
+                  {tag}
                 </span>
               </div>
-              <div className="text-[0.73rem] text-[#64748b] mt-0.5">{label}</div>
+              <div className="text-[.72rem] text-slate-400 mt-1">{label}</div>
             </div>
           ))}
         </div>
 
-        {/* Progress bar */}
-        <div className="flex justify-between text-xs text-[#93c5fd] mb-1.5">
-          <span>Monthly Goal</span><span>78%</span>
+        {/* Progress */}
+        <div className="flex justify-between text-[.75rem] text-slate-400 mb-1.5">
+          <span>Monthly Goal</span>
+          <span className="text-[#1d4ed8] font-semibold">78%</span>
         </div>
-        <div className="bg-[rgba(59,130,246,0.15)] rounded-full h-[5px] overflow-hidden">
-          <div className="h-full rounded-full bg-gradient-to-r from-[#2563eb] to-[#00d4ff]
-            w-[78%] animate-[fillIn_1.5s_cubic-bezier(.34,1,.64,1)_0.8s_both]" />
+        <div className="bg-slate-200 rounded-full h-[5px] overflow-hidden">
+          <div className="h-full rounded-full bg-gradient-to-r from-[#1d4ed8] to-[#60a5fa]"
+            style={{ width: "78%", animation: "fillIn 1.4s cubic-bezier(.34,1,.64,1) .7s both" }} />
         </div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────
-   MAIN PAGE
-───────────────────────────────────────────── */
+/* ─────────────────────────────────────────
+   TRUST BAR
+───────────────────────────────────────── */
+const TRUST = [
+  { Icon: IconMonitor, name: "Acme Corp"  },
+  { Icon: IconLayers,  name: "Stackly"    },
+  { Icon: IconGlobe,   name: "Globalink"  },
+  { Icon: IconStar,    name: "Novabase"   },
+  { Icon: IconFile,    name: "Docsify"    },
+];
+
+/* ─────────────────────────────────────────
+   PAGE
+───────────────────────────────────────── */
 export default function Home() {
-  const particlesRef = useRef(null);
-
-  useEffect(() => {
-    const container = particlesRef.current;
-    if (!container) return;
-    for (let i = 0; i < 18; i++) {
-      const p = document.createElement("div");
-      const sz = Math.random() * 4 + 2;
-      Object.assign(p.style, {
-        position: "absolute",
-        borderRadius: "50%",
-        background: "#60a5fa",
-        width: `${sz}px`,
-        height: `${sz}px`,
-        left: `${Math.random() * 100}%`,
-        opacity: String(Math.random() * 0.5 + 0.1),
-        animation: `particleRise ${Math.random() * 12 + 8}s ${Math.random() * 10}s linear infinite`,
-      });
-      container.appendChild(p);
-    }
-  }, []);
-
   return (
     <>
-      {/* ── Global keyframes (injected once) ── */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-        @keyframes fadeDown  { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:translateY(0)} }
-        @keyframes fadeUp    { from{opacity:0;transform:translateY(28px)}  to{opacity:1;transform:translateY(0)} }
-        @keyframes barGrow   { from{transform:scaleY(0);opacity:0} to{transform:scaleY(1);opacity:1} }
-        @keyframes fillIn    { from{width:0} }
-        @keyframes cardFloat { 0%,100%{transform:translateY(0) rotate(-0.5deg)} 50%{transform:translateY(-14px) rotate(0.5deg)} }
-        @keyframes fbFloat   { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-        @keyframes orbPulse  { 0%{transform:scale(1) translate(0,0)} 100%{transform:scale(1.12) translate(30px,-40px)} }
-        @keyframes particleRise {
-          0%{opacity:0;transform:translateY(100vh) scale(0)}
-          10%{opacity:0.6}
-          90%{opacity:0.3}
-          100%{opacity:0;transform:translateY(-100px) scale(1)}
+        @keyframes fadeDown   { from{opacity:0;transform:translateY(-12px)} to{opacity:1;transform:translateY(0)} }
+        @keyframes fadeUp     { from{opacity:0;transform:translateY(20px)}  to{opacity:1;transform:translateY(0)} }
+        @keyframes barGrow    { from{transform:scaleY(0)} to{transform:scaleY(1)} }
+        @keyframes fillIn     { from{width:0} }
+        @keyframes cardFloat  { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        @keyframes fbFloat    { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+        @keyframes blink      { 0%,100%{opacity:1} 50%{opacity:.2} }
+        @keyframes decoSpin   { from{transform:rotate(0)} to{transform:rotate(360deg)} }
+        @keyframes scrollBounce{0%,100%{transform:translateY(0);opacity:1}60%{transform:translateY(9px);opacity:0}}
+
+        body {
+          // background: #fff;
+          background: linear-gradient(to bottom, #ffffff, #f8fbff);
+          font-family: 'Poppins', sans-serif;
+          font-size: clamp(0.95rem, 1.35vw, 1.05rem);
+          line-height: 1.5;
+          -webkit-font-smoothing: antialiased;
         }
-        @keyframes ping {
-          0%,100%{transform:scale(1);opacity:1}
-          50%{transform:scale(1.6);opacity:0.3}
-        }
-        @keyframes badgePing {
-          0%,100%{opacity:1}
-          50%{opacity:0.2}
-        }
-        @keyframes scrollBounce {
-          0%,100%{transform:translateY(0);opacity:1}
-          60%{transform:translateY(10px);opacity:0}
-        }
-        body { background:#03091a; }
       `}</style>
 
-      <div className="min-h-screen bg-[#03091a] text-white font-[DM_Sans,sans-serif] overflow-x-hidden">
+      <div className="min-h-screen bg-white text-slate-900 overflow-x-hidden">
         <Navbar />
 
         {/* ══ HERO ══ */}
-        <section className="relative min-h-screen flex items-center pt-28 pb-20 overflow-hidden">
+        <section className="relative min-h-[calc(100vh-65px)] flex flex-col
+          items-center justify-center pt-20 pb-16 px-8 overflow-hidden">
 
-          {/* Gradient orbs */}
-          <div className="absolute inset-0 z-0">
-            <div className="absolute w-[560px] h-[560px] rounded-full
-              bg-[radial-gradient(circle,rgba(29,78,216,0.38)_0%,transparent_70%)]
-              -top-28 -right-20 blur-[80px] opacity-60
-              animate-[orbPulse_10s_ease-in-out_infinite_alternate]" />
-            <div className="absolute w-[400px] h-[400px] rounded-full
-              bg-[radial-gradient(circle,rgba(14,165,233,0.28)_0%,transparent_70%)]
-              -bottom-16 -left-24 blur-[80px] opacity-55
-              animate-[orbPulse_10s_-3s_ease-in-out_infinite_alternate]" />
-            <div className="absolute w-[300px] h-[300px] rounded-full
-              bg-[radial-gradient(circle,rgba(124,58,237,0.22)_0%,transparent_70%)]
-              top-1/2 right-[30%] blur-[80px] opacity-30
-              animate-[orbPulse_10s_-6s_ease-in-out_infinite_alternate]" />
-          </div>
+          {/* Aura top-right */}
+          <div className="absolute -top-52 -right-52 w-[700px] h-[700px] rounded-full pointer-events-none z-0"
+            style={{ background: "radial-gradient(circle, rgba(219,234,254,0.7) 0%, transparent 70%)" }} />
+          {/* Aura bottom-left */}
+          <div className="absolute -bottom-32 -left-32 w-[480px] h-[480px] rounded-full pointer-events-none z-0"
+            style={{ background: "radial-gradient(circle, rgba(239,246,255,0.8) 0%, transparent 70%)" }} />
 
-          {/* Grid overlay */}
-          <div className="absolute inset-0 z-0"
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(59,130,246,0.07) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59,130,246,0.07) 1px, transparent 1px)`,
-              backgroundSize: "56px 56px",
-              maskImage: "radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 100%)",
-            }}
-          />
+          {/* Dot grid */}
+          <div className="absolute inset-0 z-0 opacity-45 pointer-events-none" style={{
+            backgroundImage: "radial-gradient(circle, #cbd5e1 1px, transparent 1px)",
+            backgroundSize: "28px 28px",
+            maskImage: "radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 90%)",
+          }} />
 
-          {/* Particles */}
-          <div ref={particlesRef} className="absolute inset-0 z-0 overflow-hidden" />
+          {/* Deco: circle rings */}
+          <svg className="absolute top-[5%] right-0 w-40 opacity-[0.07] pointer-events-none z-0"
+            viewBox="0 0 160 160" fill="none"
+            style={{ animation: "decoSpin 35s linear infinite" }}>
+            <circle cx="80" cy="80" r="75" stroke="#1d4ed8" strokeWidth="1.5" strokeDasharray="8 5" />
+            <circle cx="80" cy="80" r="52" stroke="#1d4ed8" strokeWidth="1" strokeDasharray="5 7" />
+            <circle cx="80" cy="80" r="28" stroke="#3b82f6" strokeWidth="1" />
+          </svg>
 
-          {/* Decorative SVGs */}
-          <HexRingsSVG />
-          <CircleRingsSVG />
-          <WaveSVG />
+          {/* Deco: square rings */}
+          <svg className="absolute bottom-[8%] left-[2%] w-28 opacity-[0.07] pointer-events-none z-0"
+            viewBox="0 0 110 110" fill="none"
+            style={{ animation: "decoSpin 28s linear infinite reverse" }}>
+            <rect x="5" y="5" width="100" height="100" rx="12"
+              stroke="#1d4ed8" strokeWidth="1.2" strokeDasharray="6 4" />
+            <rect x="22" y="22" width="66" height="66" rx="8" stroke="#3b82f6" strokeWidth="1" />
+          </svg>
 
-          {/* Content grid */}
-          <div className="relative z-10 max-w-[1180px] w-full mx-auto px-7
-            grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          {/* ── Main grid ── */}
+          <div className="relative z-10 max-w-[1160px] w-full mx-auto
+            grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
 
             {/* LEFT */}
             <div>
-              {/* Badge */}
-              <div className="inline-flex items-center gap-2
-                bg-[rgba(0,212,255,0.1)] border border-[rgba(0,212,255,0.28)]
-                px-4 py-1.5 rounded-full text-[0.75rem] font-semibold
-                tracking-[0.1em] uppercase text-[#00d4ff] mb-5
-                animate-[fadeUp_0.7s_0.2s_ease_both]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#00d4ff]
-                  animate-[badgePing_1.4s_ease-in-out_infinite]" />
-                Now with AI-Powered Automation
+              {/* Pill */}
+              <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200
+                text-[#1d4ed8] text-[.75rem] font-semibold tracking-[.07em] uppercase
+                px-3.5 py-1.5 rounded-full mb-5"
+                style={{ animation: "fadeUp .6s .1s ease both" }}>
+                <span className="w-1.5 h-1.5 rounded-full bg-[#1d4ed8]"
+                  style={{ animation: "blink 1.6s infinite" }} />
+                Trusted by 50,000+ teams
               </div>
 
-              <h1 className="font-[Syne,sans-serif] text-[clamp(2.6rem,4.5vw,4rem)]
-                font-black leading-[1.03] tracking-[-0.05em] mb-5
-                animate-[fadeUp_0.7s_0.3s_ease_both]">
-                Ship Smarter.<br />
-                Scale{" "}
-                <span className="bg-gradient-to-br from-[#00d4ff] via-[#3b82f6] to-[#818cf8]
-                  bg-clip-text text-transparent [-webkit-background-clip:text] [-webkit-text-fill-color:transparent]">
-                  Faster.
-                </span>
-                <br />
-                Win Bigger.
+              {/* H1 */}
+              <h1 className="leading-[1.08] tracking-[-0.03em] text-slate-900 mb-5"
+                style={{
+                  fontFamily: "'Poppins', sans-serif",
+                  fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+                  fontWeight: 700,
+                  animation: "fadeUp .6s .2s ease both",
+                }}>
+                One platform.<br />
+                <em className="not-italic italic"
+                  style={{
+                    background: "linear-gradient(135deg, #1d4ed8 0%, #60a5fa 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}>
+                  Every
+                </em>{" "}
+                workflow<br />unified.
               </h1>
 
-              <p className="text-[#93c5fd] text-[1.05rem] leading-[1.72] max-w-[440px]
-                font-light mb-9 animate-[fadeUp_0.7s_0.4s_ease_both]">
-                DigitalSloth unifies your entire digital workflow — analytics,
-                automation, and collaboration — in one blazing-fast platform built
-                for modern teams.
+              {/* Sub */}
+              <p className="text-slate-500 text-[1.05rem] leading-[1.7] max-w-[430px]
+                font-light mb-9"
+                style={{ animation: "fadeUp .6s .3s ease both" }}>
+                DigitalSloth brings your analytics, automation, and team
+                collaboration into a single, beautifully simple workspace.
+                Less chaos. More clarity.
               </p>
 
               {/* CTAs */}
-              <div className="flex gap-4 flex-wrap animate-[fadeUp_0.7s_0.5s_ease_both]">
-                <button className="bg-gradient-to-br from-[#1d4ed8] to-[#2563eb]
-                  text-white px-7 py-3.5 rounded-xl font-semibold text-[0.94rem]
-                  border-none cursor-pointer
-                  shadow-[0_0_32px_rgba(37,99,235,0.45),inset_0_1px_0_rgba(255,255,255,0.15)]
-                  hover:shadow-[0_0_48px_rgba(37,99,235,0.75)] hover:-translate-y-0.5
+              <div className="flex gap-3 flex-wrap items-center"
+                style={{ animation: "fadeUp .6s .4s ease both" }}>
+                <button className="flex items-center gap-2 bg-[#1d4ed8] text-white border-none
+                  cursor-pointer px-6 py-3.5 rounded-xl text-[.95rem] font-semibold font-[inherit]
+                  shadow-[0_2px_8px_rgba(29,78,216,0.25),0_8px_24px_rgba(29,78,216,0.18)]
+                  hover:bg-[#2563eb] hover:-translate-y-0.5
+                  hover:shadow-[0_4px_12px_rgba(29,78,216,0.3),0_12px_32px_rgba(29,78,216,0.22)]
                   transition-all">
-                  Start Free Trial →
+                  Start for free
+                  <IconArrowRight />
                 </button>
-
-                <button className="bg-[rgba(59,130,246,0.1)] text-[#93c5fd]
-                  px-7 py-3.5 rounded-xl font-medium text-[0.94rem]
-                  border border-[rgba(59,130,246,0.25)] cursor-pointer
-                  hover:bg-[rgba(59,130,246,0.18)] hover:border-[rgba(59,130,246,0.5)]
-                  hover:-translate-y-0.5 transition-all">
-                  <PlayIcon />
-                  Watch Demo
+                <button className="flex items-center gap-2 bg-white text-slate-800 cursor-pointer
+                  border-[1.5px] border-slate-200 px-6 py-3.5 rounded-xl
+                  text-[.95rem] font-semibold font-[inherit]
+                  hover:border-blue-300 hover:text-[#1d4ed8] hover:-translate-y-0.5
+                  transition-all">
+                  <IconPlay stroke="currentColor" />
+                  Watch demo
                 </button>
               </div>
 
-              {/* Stats */}
-              <div className="flex gap-8 mt-12 animate-[fadeUp_0.7s_0.6s_ease_both]">
-                {[
-                  { num: "50K+",  label: "Teams Onboarded" },
-                  { num: "99.9%", label: "Uptime SLA" },
-                  { num: "4.9★",  label: "User Rating" },
-                ].map(({ num, label }, i) => (
-                  <div key={label} className="flex items-stretch gap-8">
-                    {i !== 0 && (
-                      <div className="w-px bg-[rgba(59,130,246,0.2)] self-stretch" />
-                    )}
-                    <div>
-                      <div className="font-[Syne,sans-serif] text-[1.8rem] font-extrabold
-                        leading-none bg-gradient-to-br from-white to-[#93c5fd]
-                        bg-clip-text text-transparent [-webkit-background-clip:text]
-                        [-webkit-text-fill-color:transparent]">
-                        {num}
-                      </div>
-                      <div className="text-[0.78rem] text-[#64748b] mt-0.5">{label}</div>
+              {/* Social proof */}
+              <div className="flex items-center gap-4 mt-11"
+                style={{ animation: "fadeUp .6s .5s ease both" }}>
+                <div className="flex">
+                  {["AK", "MS", "JR", "TL", "+"].map((av, i) => (
+                    <div key={i}
+                      className="w-8 h-8 rounded-full border-2 border-white
+                        bg-gradient-to-br from-[#93c5fd] to-[#1d4ed8]
+                        flex items-center justify-center -ml-2 first:ml-0
+                        text-[.65rem] text-white font-bold">
+                      {av}
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                <div className="text-[.82rem] text-slate-500 leading-snug">
+                  <div className="text-amber-400 text-[.8rem] tracking-[.05em]">★★★★★</div>
+                  Loved by <strong className="text-slate-900">50,000+</strong> developers & teams
+                </div>
               </div>
             </div>
 
@@ -384,18 +410,35 @@ export default function Home() {
             <DashboardCard />
           </div>
 
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10
-            flex flex-col items-center gap-2
-            animate-[fadeUp_1s_1s_ease_both]">
-            <div className="w-[22px] h-9 border-2 border-[rgba(59,130,246,0.4)]
-              rounded-full flex justify-center pt-1.5">
-              <div className="w-1 h-2 bg-[#3b82f6] rounded-full
-                animate-[scrollBounce_1.6s_ease-in-out_infinite]" />
+          {/* ── Trust bar ── */}
+          <div className="relative z-10 max-w-[1160px] w-full mx-auto
+            mt-14 pt-8 border-t border-slate-200"
+            style={{ animation: "fadeUp .6s .65s ease both" }}>
+            <p className="text-[.75rem] text-slate-400 text-center mb-4 tracking-[.04em]">
+              TRUSTED BY TEAMS AT
+            </p>
+            <div className="flex items-center justify-center gap-9 flex-wrap">
+              {TRUST.map(({ Icon, name }) => (
+                <div key={name}
+                  className="flex items-center gap-2 text-[.82rem] font-bold
+                  text-slate-400 opacity-60 hover:opacity-100 transition-opacity cursor-default">
+                  <Icon />
+                  {name}
+                </div>
+              ))}
             </div>
-            <span className="text-[#475569] text-[0.72rem] tracking-[0.08em] uppercase">
-              Scroll
-            </span>
+          </div>
+
+          {/* Scroll hint */}
+          <div className="absolute bottom-7 left-1/2 -translate-x-1/2 z-10
+            flex flex-col items-center gap-1.5"
+            style={{ animation: "fadeUp 1s 1.2s ease both" }}>
+            <div className="w-5 h-8 border-[1.5px] border-slate-300 rounded-full
+              flex justify-center pt-[5px]">
+              <div className="w-[3px] h-[7px] bg-[#1d4ed8] rounded-full"
+                style={{ animation: "scrollBounce 1.6s ease-in-out infinite" }} />
+            </div>
+            <span className="text-[.68rem] text-slate-400 tracking-[.06em]">SCROLL</span>
           </div>
         </section>
       </div>
