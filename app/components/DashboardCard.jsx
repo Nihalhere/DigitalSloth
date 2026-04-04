@@ -44,14 +44,14 @@ export default function DashboardCard() {
         <div className="badge-icon success">
           ↑
         </div>
-        <span style={{ color: '#1e293b' }}>Revenue up </span><strong style={{ color: '#1e293b' }}>+24.6%</strong>
+        <span>Revenue up </span><strong>+24.6%</strong>
       </div>
 
       <div className="float-badge badge-bl">
         <div className="badge-icon info">
           ✓
         </div>
-        <span style={{ color: '#1e293b' }}>3 automations completed</span>
+        <span>3 automations completed</span>
       </div>
 
       {/* Main card */}
@@ -59,7 +59,7 @@ export default function DashboardCard() {
         <div className="accent-line" />
 
         <div className="card-hdr">
-          <span className="card-title" style={{ color: '#1e293b' }}>Analytics dashboard</span>
+          <span className="card-title">Analytics dashboard</span>
           <div className="live-pill">
             <span className="dot-blink" />
             Live
@@ -87,19 +87,19 @@ export default function DashboardCard() {
           {METRICS.map(({ num, tag, up, label }) => (
             <div key={label} className="metric-box">
               <div>
-                <span className="m-num" style={{ color: '#0a4bb3!important' }}>{num}</span>
-                <span className={up ? "m-tag-up" : "m-tag-dn"} style={{ color: up ? '#16a34a' : '#dc2626' }}>
+                <span className="m-num">{num}</span>
+                <span className={up ? "m-tag-up" : "m-tag-dn"}>
                   {tag}
                 </span>
               </div>
-              <div className="m-lbl" style={{ color: '#114b9c' }}>{label}</div>
+              <div className="m-lbl">{label}</div>
             </div>
           ))}
         </div>
 
         {/* Progress */}
         <div className="prog-row">
-          <span style={{ color: '#64748b' }}>Monthly goal</span>
+          <span>Monthly goal</span>
           <span className="prog-val" style={{ color: '#2563eb' }}>78%</span>
         </div>
 
