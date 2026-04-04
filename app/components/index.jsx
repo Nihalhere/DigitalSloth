@@ -300,18 +300,32 @@ export default function AllCards() {
   return (
     <div style={{ padding: "1.5rem 1rem 2rem", fontFamily: "var(--font-sans, system-ui, sans-serif)" }}>
       {/* Tab row */}
-      <div style={{ display: "flex", justifyContent: "center", gap: 6, marginBottom: "1.2rem", flexWrap: "wrap" }}>
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        gap: 8,
+        marginBottom: "1.2rem",
+        flexWrap: "wrap",
+        padding: "8px",
+        background: "#F1F5F9",
+        borderRadius: 999,
+        border: "1px solid #E2E8F0",
+      }}>
         {CARDS.map((label, i) => (
           <button
             key={label}
             onClick={() => handleNav(i)}
             style={{
-              padding: "5px 16px", borderRadius: 999, fontSize: 12, fontWeight: 500, cursor: "pointer",
-              border: "0.5px solid",
-              borderColor: current === i ? "var(--color-border-primary)" : "var(--color-border-secondary)",
-              background: current === i ? "var(--color-background-primary)" : "var(--color-background-secondary)",
-              color: current === i ? "var(--color-text-primary)" : "var(--color-text-secondary)",
-              transition: "all .25s",
+              padding: "8px 18px",
+              borderRadius: 999,
+              fontSize: 12,
+              fontWeight: 600,
+              cursor: "pointer",
+              border: "none",
+              background: current === i ? "#2563EB" : "transparent",
+              color: current === i ? "#FFFFFF" : "#475569",
+              boxShadow: current === i ? "0 6px 16px rgba(37, 99, 235, 0.18)" : "none",
+              transition: "all .25s ease",
             }}
           >
             {label}
