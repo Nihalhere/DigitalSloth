@@ -1,6 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import DashboardCard from "./components/DashboardCard";
+import ERPCard from "./components/ERPCard";
+import MobileEcomCard from "./components/MobileEcomCard";
+import AllCards from "./components/index";
 /* ─────────────────────────────────────────
    FEATHER SVG ICONS (inline, zero deps)
 ───────────────────────────────────────── */
@@ -277,101 +281,119 @@ const METRICS = [
   { num: "3.2s",   tag: "↓0.4s", up: false, label: "Avg Response" },
 ];
 
-function DashboardCard() {
-  return (
-    <div className="relative" style={{ animation: "fadeUp .6s .25s ease both" }}>
+// function DashboardCard() {
+//   return (
+//     // <div className="relative" style={{ animation: "fadeUp .6s .25s ease both" }}>
 
-      {/* Float badge 1 */}
-      <div className="absolute -top-[18px] -right-4 z-10 flex items-center gap-2
-        bg-white border border-slate-200 rounded-xl px-3.5 py-2
-        shadow-[0_8px_32px_rgba(15,23,42,0.1)]
-        text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
-        style={{ animation: "fbFloat 5s ease-in-out infinite" }}>
-        <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center shrink-0">
-          <IconTrendingUp />
-        </div>
-        Revenue up <strong className="ml-0.5">+24.6%</strong> this week
-      </div>
+//     //   {/* Float badge 1 */}
+//     //   <div className="absolute -top-[18px] -right-4 z-10 flex items-center gap-2
+//     //     bg-white border border-slate-200 rounded-xl px-3.5 py-2
+//     //     shadow-[0_8px_32px_rgba(15,23,42,0.1)]
+//     //     text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
+//     //     style={{ animation: "fbFloat 5s ease-in-out infinite" }}>
+//     //     <div className="w-7 h-7 rounded-lg bg-green-50 flex items-center justify-center shrink-0">
+//     //       <IconTrendingUp />
+//     //     </div>
+//     //     Revenue up <strong className="ml-0.5">+24.6%</strong> this week
+//     //   </div>
 
-      {/* Float badge 2 */}
-      <div className="absolute bottom-4 -left-5 z-10 flex items-center gap-2
-        bg-white border border-slate-200 rounded-xl px-3.5 py-2
-        shadow-[0_8px_32px_rgba(15,23,42,0.1)]
-        text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
-        style={{ animation: "fbFloat 5s -2.5s ease-in-out infinite" }}>
-        <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
-          <IconCheckCircle />
-        </div>
-        3 automations completed
-      </div>
+//     //   {/* Float badge 2 */}
+//     //   <div className="absolute bottom-4 -left-5 z-10 flex items-center gap-2
+//     //     bg-white border border-slate-200 rounded-xl px-3.5 py-2
+//     //     shadow-[0_8px_32px_rgba(15,23,42,0.1)]
+//     //     text-[.78rem] font-medium text-slate-800 whitespace-nowrap"
+//     //     style={{ animation: "fbFloat 5s -2.5s ease-in-out infinite" }}>
+//     //     <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+//     //       <IconCheckCircle />
+//     //     </div>
+//     //     3 automations completed
+//     //   </div>
 
-      {/* Main card */}
-      <div className="bg-white border border-slate-200 rounded-[20px] p-7 relative
-        shadow-[0_4px_6px_rgba(15,23,42,0.04),0_20px_60px_rgba(15,23,42,0.08)]"
-        style={{ animation: "cardFloat 7s ease-in-out infinite" }}>
+//     //   {/* Main card */}
+//     //   <div className="bg-white border border-slate-200 rounded-[20px] p-7 relative
+//     //     shadow-[0_4px_6px_rgba(15,23,42,0.04),0_20px_60px_rgba(15,23,42,0.08)]"
+//     //     style={{ animation: "cardFloat 7s ease-in-out infinite" }}>
 
-        {/* Top accent line */}
-        <div className="absolute top-0 left-6 right-6 h-[2px] rounded-b-sm
-          bg-gradient-to-r from-[#1d4ed8] via-[#60a5fa] to-transparent" />
+//     //     {/* Top accent line */}
+//     //     <div className="absolute top-0 left-6 right-6 h-[2px] rounded-b-sm
+//     //       bg-gradient-to-r from-[#1d4ed8] via-[#60a5fa] to-transparent" />
 
-        {/* Card header */}
-        <div className="flex items-center justify-between mb-5">
-          <span className="text-[.85rem] font-bold text-slate-900">Analytics Overview</span>
-          <div className="flex items-center gap-1.5 bg-blue-50 text-[#1d4ed8]
-            text-[.7rem] font-semibold px-2.5 py-1 rounded-full">
-            <span className="w-[5px] h-[5px] rounded-full bg-green-500"
-              style={{ animation: "blink 1.2s infinite" }} />
-            Live
-          </div>
-        </div>
+//     //     {/* Card header */}
+//     //     <div className="flex items-center justify-between mb-5">
+//     //       <span className="text-[.85rem] font-bold text-slate-900">Analytics Overview</span>
+//     //       <div className="flex items-center gap-1.5 bg-blue-50 text-[#1d4ed8]
+//     //         text-[.7rem] font-semibold px-2.5 py-1 rounded-full">
+//     //         <span className="w-[5px] h-[5px] rounded-full bg-green-500"
+//     //           style={{ animation: "blink 1.2s infinite" }} />
+//     //         Live
+//     //       </div>
+//     //     </div>
 
-        {/* Bar chart */}
-        <div className="flex items-end gap-1.5 h-20 mb-[18px] px-0.5">
-          {BARS.map(({ h, hi }, i) => (
-            <div key={i}
-              className={`flex-1 rounded-t-[4px] origin-bottom cursor-pointer
-                transition-colors duration-200
-                ${hi
-                  ? "bg-gradient-to-b from-[#1d4ed8] to-[#3b82f6]"
-                  : "bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] hover:from-[#1d4ed8] hover:to-[#3b82f6]"
-                }`}
-              style={{
-                height: `${h}%`,
-                animation: `barGrow 1s cubic-bezier(.34,1.56,.64,1) ${0.05 + i * 0.05}s both`,
-              }}
-            />
-          ))}
-        </div>
+//     //     {/* Bar chart */}
+//     //     <div className="flex items-end gap-1.5 h-20 mb-[18px] px-0.5">
+//     //       {BARS.map(({ h, hi }, i) => (
+//     //         <div key={i}
+//     //           className={`flex-1 rounded-t-[4px] origin-bottom cursor-pointer
+//     //             transition-colors duration-200
+//     //             ${hi
+//     //               ? "bg-gradient-to-b from-[#1d4ed8] to-[#3b82f6]"
+//     //               : "bg-gradient-to-b from-[#dbeafe] to-[#bfdbfe] hover:from-[#1d4ed8] hover:to-[#3b82f6]"
+//     //             }`}
+//     //           style={{
+//     //             height: `${h}%`,
+//     //             animation: `barGrow 1s cubic-bezier(.34,1.56,.64,1) ${0.05 + i * 0.05}s both`,
+//     //           }}
+//     //         />
+//     //       ))}
+//     //     </div>
 
-        {/* Metric grid */}
-        <div className="grid grid-cols-2 gap-2.5 mb-3.5">
-          {METRICS.map(({ num, tag, up, label }) => (
-            <div key={label}
-              className="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3">
-              <div className="text-[1.2rem] font-bold text-slate-900 leading-none">
-                {num}
-                <span className={`text-[.7rem] font-semibold ml-1 ${up ? "text-green-600" : "text-red-500"}`}>
-                  {tag}
-                </span>
-              </div>
-              <div className="text-[.72rem] text-slate-400 mt-1">{label}</div>
-            </div>
-          ))}
-        </div>
+//     //     {/* Metric grid */}
+//     //     <div className="grid grid-cols-2 gap-2.5 mb-3.5">
+//     //       {METRICS.map(({ num, tag, up, label }) => (
+//     //         <div key={label}
+//     //           className="bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-3">
+//     //           <div className="text-[1.2rem] font-bold text-slate-900 leading-none">
+//     //             {num}
+//     //             <span className={`text-[.7rem] font-semibold ml-1 ${up ? "text-green-600" : "text-red-500"}`}>
+//     //               {tag}
+//     //             </span>
+//     //           </div>
+//     //           <div className="text-[.72rem] text-slate-400 mt-1">{label}</div>
+//     //         </div>
+//     //       ))}
+//     //     </div>
 
-        {/* Progress */}
-        <div className="flex justify-between text-[.75rem] text-slate-400 mb-1.5">
-          <span>Monthly Goal</span>
-          <span className="text-[#1d4ed8] font-semibold">78%</span>
-        </div>
-        <div className="bg-slate-200 rounded-full h-[5px] overflow-hidden">
-          <div className="h-full rounded-full bg-gradient-to-r from-[#1d4ed8] to-[#60a5fa]"
-            style={{ width: "78%", animation: "fillIn 1.4s cubic-bezier(.34,1,.64,1) .7s both" }} />
-        </div>
-      </div>
-    </div>
-  );
-}
+//     //     {/* Progress */}
+//     //     <div className="flex justify-between text-[.75rem] text-slate-400 mb-1.5">
+//     //       <span>Monthly Goal</span>
+//     //       <span className="text-[#1d4ed8] font-semibold">78%</span>
+//     //     </div>
+//     //     <div className="bg-slate-200 rounded-full h-[5px] overflow-hidden">
+//     //       <div className="h-full rounded-full bg-gradient-to-r from-[#1d4ed8] to-[#60a5fa]"
+//     //         style={{ width: "78%", animation: "fillIn 1.4s cubic-bezier(.34,1,.64,1) .7s both" }} />
+//     //     </div>
+//     //   </div>
+//     // </div>
+//     <>
+//     <Index/>
+//     {/* <DashboardCard/> */}
+//     {/* <AllCards/> */}
+//     </>
+//   );
+// }
+
+/* ─────────────────────────────────────────
+   ALL CARDS
+───────────────────────────────────────── */
+// function AllCards() {
+//   return (
+//     <div style={{ display: "flex", flexDirection: "column", gap: "3rem", padding: "2rem 1rem" }}>
+//       <DashboardCard />
+//       <ERPCard />
+//       <MobileEcomCard />
+//     </div>
+//   );
+// }
 
 /* ─────────────────────────────────────────
    TRUST BAR
@@ -567,7 +589,7 @@ export default function Home() {
             </div>
 
             {/* RIGHT */}
-            <DashboardCard />
+            <AllCards />
           </div>
 
           {/* ── Trust bar ── */}
