@@ -147,7 +147,7 @@ function Navbar() {
           <a href="/" className="flex items-center gap-3 group">
             <div className="relative w-15 h-15">
               <Image
-                src="/logo1.png"
+                src="/logo2.png"
                 alt="DigitalSloth Logo"
                 fill
                 className="object-contain group-hover:scale-110 transition-transform duration-300"
