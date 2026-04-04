@@ -474,9 +474,8 @@ export default function Home() {
               {/* H1 */}<h1
   className="
     leading-[1.08] tracking-[-0.03em]
-    bg-gradient-to-r 
-    from-[#93C5FD] via-[#38BDF8] to-[#A78BFA]
-    bg-clip-text text-transparent
+    text-slate-900 font-bold
+    md:bg-gradient-to-r md:from-[#93C5FD] md:via-[#38BDF8] md:to-[#A78BFA] md:bg-clip-text md:text-transparent
     mb-5
   "
   style={{
