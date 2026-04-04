@@ -495,7 +495,7 @@ export default function Home() {
   Business.
 </h1>
               {/* Sub */}
-              <p className="text-white/85 text-[1.05rem] leading-[1.7] max-w-[430px]
+              <p className="text-slate-900/90 md:text-white/85 text-[1.05rem] leading-[1.7] max-w-[430px]
                 font-light mb-9"
                 style={{ animation: "fadeUp .6s .3s ease both" }}>
                 We solve your business problems with code magic - crafting websites, 

@@ -1,6 +1,6 @@
 import "./cards.css";
 
-const PRODUCTS = [
+const  PRODUCTS= [
   { name: "Premium T-shirt", price: "₹799", color: "#DBEAFE" },
   { name: "Running Shoes", price: "₹2,499", color: "#FCE7F3" },
   { name: "Wireless Buds", price: "₹1,299", color: "#DCFCE7" },
@@ -76,7 +76,7 @@ export default function MobileEcomCard() {
                       className="phone-prod-img"
                       style={{ background: p.color }}
                     />
-                    <span>{p.name}</span>
+                    <span style={{color:'black'}}>{p.name}</span>
                   </div>
 
                   <div className="phone-prod-price">{p.price}</div>

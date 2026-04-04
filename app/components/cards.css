@@ -402,6 +402,7 @@
 .phone-prod-hdr {
   font-size: 12px;
   font-weight: 600;
+  color: #0f172a;
   margin-bottom: 6px;
 }
 
@@ -417,6 +418,13 @@
   align-items: center;
   gap: 6px;
   font-size: 12px;
+  color: #0f172a;
+}
+
+.phone-prod-left span,
+.phone-prod-left,
+.phone-prod-row {
+  color: #0f172a;
 }
 
 .phone-prod-img {
@@ -427,8 +435,8 @@
 
 .phone-prod-price {
   font-size: 12px;
-  color: #2563EB;
-  font-weight: 500;
+  color: #0f172a;
+  font-weight: 600;
 }
 
 /* ===== CTA ===== */
