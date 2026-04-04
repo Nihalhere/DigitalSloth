@@ -462,11 +462,11 @@ export default function Home() {
             {/* LEFT */}
             <div>
               {/* Pill */}
-              <div className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-white/50
-                text-slate-800 text-[.75rem] font-semibold tracking-[.07em] uppercase
+              <div className="inline-flex items-center gap-2 bg-white/80 md:bg-slate-800/90 backdrop-blur-sm border border-white/50 md:border-slate-700
+                text-slate-800 md:text-white text-[.75rem] font-semibold tracking-[.07em] uppercase
                 px-3.5 py-1.5 rounded-full mb-5"
                 style={{ animation: "fadeUp .6s .1s ease both" }}>
-                <span className="w-1.5 h-1.5 rounded-full bg-slate-800"
+                <span className="w-1.5 h-1.5 rounded-full bg-slate-800 md:bg-white"
                   style={{ animation: "blink 1.6s infinite" }} />
                 Trusted by 500+ businesses
               </div>
