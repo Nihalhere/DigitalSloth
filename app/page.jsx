@@ -145,9 +145,9 @@ function Navbar() {
 
           {/* LEFT LOGO */}
           <a href="/" className="flex items-center gap-3 group">
-            <div className="relative w-10 h-10">
+            <div className="relative w-15 h-15">
               <Image
-                src="/logo.png"
+                src="/logo1.png"
                 alt="DigitalSloth Logo"
                 fill
                 className="object-contain group-hover:scale-110 transition-transform duration-300"
@@ -451,28 +451,29 @@ export default function Home() {
                 Trusted by 50,000+ teams
               </div>
 
-              {/* H1 */}
-<h1 className="leading-[1.08] tracking-[-0.03em] bg-gradient-to-r from-[#1E3A8A] via-[#3B82F6] to-[#60A5FA] bg-clip-text text-transparent md:text-white mb-5"
-           style={{
-                  fontFamily: "'Poppins', sans-serif",
-                  fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
-                  fontWeight: 700,
-                  animation: "fadeUp .6s .2s ease both",
-                }}>
-                One platform.<br />
-               <em
-  className="not-italic"
+              {/* H1 */}<h1
+  className="
+    leading-[1.08] tracking-[-0.03em]
+    bg-gradient-to-r 
+    from-[#93C5FD] via-[#38BDF8] to-[#A78BFA]
+    bg-clip-text text-transparent
+    mb-5
+  "
   style={{
-    background: "linear-gradient(90deg, #06b6d4, #8b5cf6)",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent"
+    fontFamily: "'Poppins', sans-serif",
+    fontSize: "clamp(2.4rem, 5vw, 3.8rem)",
+    fontWeight: 700,
+    animation: "fadeUp .6s .2s ease both",
   }}
 >
-  Every
-</em>{" "}
-                workflow<br />unified.
-              </h1>
+  One platform.<br />
 
+  <span >
+    Every
+  </span>{" "}
+  
+  workflow<br />unified.
+</h1>
               {/* Sub */}
               <p className="text-white/85 text-[1.05rem] leading-[1.7] max-w-[430px]
                 font-light mb-9"
