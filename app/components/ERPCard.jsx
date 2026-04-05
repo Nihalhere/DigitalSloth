@@ -12,7 +12,7 @@ const NAV = ["Inventory", "Orders", "HR", "Finance", "Dashboard"];
 
 export default function ERPCard() {
   const [orders, setOrders] = useState([
-    { id: "#4821", amount: "₹12,400", status: "Done", cls: "green" },
+    { id: "rgba(22, 22, 22, 0.07)", amount: "₹12,400", status: "Done", cls: "green" },
     { id: "#4822", amount: "₹8,750", status: "Pending", cls: "amber" },
     { id: "#4823", amount: "₹31,000", status: "Delayed", cls: "red" },
   ]);
@@ -90,8 +90,8 @@ export default function ERPCard() {
 
             {orders.map((o, i) => (
               <div key={o.id} className="erp-tr">
-                <div>{o.id}</div>
-                <div>{o.amount}</div>
+                <div style={{color:"pink"}}>{o.id}</div>
+                <div >{o.amount}</div>
                 <div>
                   <span className={`badge ${o.cls}`}>{o.status}</span>
                 </div>
