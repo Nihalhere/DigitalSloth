@@ -507,3 +507,30 @@ body {
 }
 
 .phone-nav-dot.on { background: #185FA5; }
+
+
+/* @media (prefers-color-scheme: dark) { */
+    .phone-prod-name {
+        color: #000000!important;
+    }
+
+        .erp-td {
+        color: #000000!important;
+    }
+
+
+    .typenav{
+      display: flex;
+    justify-content: center;
+    border-radius: 98px;
+    }
+
+    .navtypo{
+          animation: fadeDown .5s ease both;
+    box-shadow: -1px 1px 30px rgba(0, 0, 0, 0.08);
+    /* position: fixed; */
+    width: 74%;
+    border-radius: 12px;
+    position: fixed;
+    top: 15px;
+    }
