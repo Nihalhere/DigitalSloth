@@ -41,7 +41,7 @@ function Navbar() {
             <Link href="/" className="flex items-center gap-2 group" onClick={closeMenus}>
               <div className="relative w-12 h-12">
                 <Image
-                  src="/logo2.png"
+                  src="/logo4.png"
                   alt="DigitalSloth Logo"
                   fill
                   className="object-contain group-hover:scale-110 transition-transform duration-300"

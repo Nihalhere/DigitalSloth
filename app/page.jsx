@@ -6,6 +6,7 @@ import ERPCard from "./components/ERPCard";
 import MobileEcomCard from "./components/MobileEcomCard";
 import AllCards from "./components/index";
 import Navbar from "./components/Navbar";
+import Product from "./components/product";
 /* ─────────────────────────────────────────
    FEATHER SVG ICONS (inline, zero deps)
 ───────────────────────────────────────── */
@@ -310,9 +311,8 @@ export default function Home() {
           </div>
 
           {/* ── Trust bar ── */}
-          <div className="relative z-10 max-w-[1160px] w-full mx-auto
-            mt-14 pt-8 border-t border-slate-200"
-            style={{ animation: "fadeUp .6s .65s ease both" }}>
+          <div  className="relative z-10 max-w-[1160px] w-full mx-auto
+            mt-14 pt-8 border-t border-slate-200"  style={{ animation: "fadeUp .6s .65s ease both" }}>
             <p className="text-[.75rem] text-slate-400 text-center mb-4 tracking-[.04em]">
               TRUSTED BY TEAMS AT
             </p>
@@ -340,6 +340,8 @@ export default function Home() {
             <span className="text-[.68rem] text-slate-400 tracking-[.06em]">SCROLL</span>
           </div>
         </section>
+        
+        <Product/>
       </div>
     </>
   );
