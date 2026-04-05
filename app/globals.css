@@ -534,3 +534,8 @@ body {
     position: fixed;
     top: 15px;
     }
+
+    .phone-outer {
+    display: flex;
+    justify-content: center;
+}

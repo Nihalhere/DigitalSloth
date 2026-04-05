@@ -7,6 +7,7 @@ import MobileEcomCard from "./components/MobileEcomCard";
 import AllCards from "./components/index";
 import Navbar from "./components/Navbar";
 import Product from "./components/product";
+import Footer from "./components/footer";
 /* ─────────────────────────────────────────
    FEATHER SVG ICONS (inline, zero deps)
 ───────────────────────────────────────── */
@@ -342,6 +343,7 @@ export default function Home() {
         </section>
         
         <Product/>
+        <Footer />
       </div>
     </>
   );

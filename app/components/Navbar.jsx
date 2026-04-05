@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-const NAV_ITEMS = ['Product', 'Features', 'Pricing'];
+const NAV_ITEMS = [
+  { label: 'Product', href: '#product' },
+  { label: 'Features', href: '#' },
+  { label: 'Pricing', href: '#' },
+];
 const MORE_ITEMS = ['Blog', 'Docs', 'Support'];
 
 function Navbar() {
@@ -77,12 +81,12 @@ function Navbar() {
             <div className="hidden md:flex items-center gap-6">
               <ul className="flex items-center gap-6 lg:gap-10">
                 {NAV_ITEMS.map((item) => (
-                  <li key={item}>
+                  <li key={item.label}>
                     <a
-                      href="#"
+                      href={item.href}
                       className="group relative px-2 py-2 text-slate-600 text-[0.95rem] font-medium hover:text-[#1d4ed8] hover:bg-blue-50 rounded-md transition-all duration-200"
                     >
-                      {item}
+                      {item.label}
                     </a>
                   </li>
                 ))}
@@ -150,12 +154,12 @@ function Navbar() {
               <div className="flex flex-col gap-2">
                 {NAV_ITEMS.map((item) => (
                   <a
-                    key={item}
-                    href="#"
+                    key={item.label}
+                    href={item.href}
                     onClick={closeMenus}
                     className="px-4 py-3 rounded-xl text-slate-700 font-medium hover:bg-blue-50 hover:text-[#1d4ed8] transition-colors"
                   >
-                    {item}
+                    {item.label}
                   </a>
                 ))}
 
